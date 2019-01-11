@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="master_MecaSim_etudiant" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="debug|x64">
+				<Option output="bin/master_MecaSim_etudiant" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x64/debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-m64" />
+					<Add option="-DDEBUG" />
+					<Add option="-mtune=native -march=native" />
+					<Add option="-std=c++11" />
+					<Add option="-W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable" />
+					<Add option="-pipe" />
+					<Add option="-flto" />
+					<Add option="-g" />
+					<Add directory="." />
+					<Add directory="src/gKit" />
+					<Add directory="src/master_MecaSim/src-etudiant" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-L/usr/lib64" />
+					<Add option="-flto" />
+					<Add option="-g" />
+					<Add directory="." />
+					<Add library="GLEW" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="GL" />
+				</Linker>
+			</Target>
+			<Target title="release|x64">
+				<Option output="bin/master_MecaSim_etudiant" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x64/release" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-m64" />
+					<Add option="-mtune=native -march=native" />
+					<Add option="-std=c++11" />
+					<Add option="-W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable" />
+					<Add option="-pipe" />
+					<Add option="-flto" />
+					<Add option="-fopenmp" />
+					<Add directory="." />
+					<Add directory="src/gKit" />
+					<Add directory="src/master_MecaSim/src-etudiant" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m64" />
+					<Add option="-L/usr/lib64" />
+					<Add option="-flto" />
+					<Add option="-fopenmp" />
+					<Add directory="." />
+					<Add library="GLEW" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="GL" />
+				</Linker>
+			</Target>
+			<Target title="debug|x32">
+				<Option output="bin/master_MecaSim_etudiant" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x32/debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-m32" />
+					<Add option="-DDEBUG" />
+					<Add option="-mtune=native -march=native" />
+					<Add option="-std=c++11" />
+					<Add option="-W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable" />
+					<Add option="-pipe" />
+					<Add option="-flto" />
+					<Add option="-g" />
+					<Add directory="." />
+					<Add directory="src/gKit" />
+					<Add directory="src/master_MecaSim/src-etudiant" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+					<Add option="-L/usr/lib32" />
+					<Add option="-flto" />
+					<Add option="-g" />
+					<Add directory="." />
+					<Add library="GLEW" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="GL" />
+				</Linker>
+			</Target>
+			<Target title="release|x32">
+				<Option output="bin/master_MecaSim_etudiant" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/x32/release" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-m32" />
+					<Add option="-mtune=native -march=native" />
+					<Add option="-std=c++11" />
+					<Add option="-W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable" />
+					<Add option="-pipe" />
+					<Add option="-flto" />
+					<Add option="-fopenmp" />
+					<Add directory="." />
+					<Add directory="src/gKit" />
+					<Add directory="src/master_MecaSim/src-etudiant" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m32" />
+					<Add option="-L/usr/lib32" />
+					<Add option="-flto" />
+					<Add option="-fopenmp" />
+					<Add directory="." />
+					<Add library="GLEW" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="GL" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="src/gKit/mesh.cpp">
+		</Unit>
+		<Unit filename="src/gKit/texture.cpp">
+		</Unit>
+		<Unit filename="src/gKit/app.cpp">
+		</Unit>
+		<Unit filename="src/gKit/program.cpp">
+		</Unit>
+		<Unit filename="src/gKit/buffer.cpp">
+		</Unit>
+		<Unit filename="src/gKit/app_time.cpp">
+		</Unit>
+		<Unit filename="src/gKit/draw.cpp">
+		</Unit>
+		<Unit filename="src/gKit/mat.cpp">
+		</Unit>
+		<Unit filename="src/gKit/wavefront.cpp">
+		</Unit>
+		<Unit filename="src/gKit/text.cpp">
+		</Unit>
+		<Unit filename="src/gKit/gamepads.cpp">
+		</Unit>
+		<Unit filename="src/gKit/window.cpp">
+		</Unit>
+		<Unit filename="src/gKit/color.cpp">
+		</Unit>
+		<Unit filename="src/gKit/image.cpp">
+		</Unit>
+		<Unit filename="src/gKit/widgets.cpp">
+		</Unit>
+		<Unit filename="src/gKit/uniforms.cpp">
+		</Unit>
+		<Unit filename="src/gKit/vec.cpp">
+		</Unit>
+		<Unit filename="src/gKit/image_io.cpp">
+		</Unit>
+		<Unit filename="src/gKit/orbiter.cpp">
+		</Unit>
+		<Unit filename="src/gKit/orbiter.h">
+		</Unit>
+		<Unit filename="src/gKit/gamepads.h">
+		</Unit>
+		<Unit filename="src/gKit/quaternion.h">
+		</Unit>
+		<Unit filename="src/gKit/draw.h">
+		</Unit>
+		<Unit filename="src/gKit/texture.h">
+		</Unit>
+		<Unit filename="src/gKit/image_io.h">
+		</Unit>
+		<Unit filename="src/gKit/mesh.h">
+		</Unit>
+		<Unit filename="src/gKit/uniforms.h">
+		</Unit>
+		<Unit filename="src/gKit/mat.h">
+		</Unit>
+		<Unit filename="src/gKit/vec.h">
+		</Unit>
+		<Unit filename="src/gKit/window.h">
+		</Unit>
+		<Unit filename="src/gKit/program.h">
+		</Unit>
+		<Unit filename="src/gKit/image.h">
+		</Unit>
+		<Unit filename="src/gKit/glcore.h">
+		</Unit>
+		<Unit filename="src/gKit/text.h">
+		</Unit>
+		<Unit filename="src/gKit/wavefront.h">
+		</Unit>
+		<Unit filename="src/gKit/widgets.h">
+		</Unit>
+		<Unit filename="src/gKit/app_time.h">
+		</Unit>
+		<Unit filename="src/gKit/color.h">
+		</Unit>
+		<Unit filename="src/gKit/app.h">
+		</Unit>
+		<Unit filename="src/gKit/buffer.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Properties.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Viewer-init.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/CalculsImpl.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimule.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/SolveurExpl.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/CalculsMSS.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/CalculsRigidBody.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleRigidBody.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Param.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Viewer.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleParticule.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/SolveurImpl.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleMSS.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/MSS.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Matrix.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/CalculsParticule.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/main.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleSPH.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/CalculsSPH.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Scene.cpp">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleSPH.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleRigidBody.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleMSS.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimule.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Matrix.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/ObjetSimuleParticule.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/SolveurImpl.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Scene.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Noeuds.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Properties.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/SolveurExpl.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/MSS.h">
+		</Unit>
+		<Unit filename="src/master_MecaSim/src-etudiant/Viewer.h">
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+
