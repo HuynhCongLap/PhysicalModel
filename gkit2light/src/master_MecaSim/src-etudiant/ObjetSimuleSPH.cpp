@@ -57,7 +57,8 @@ ObjetSimuleSPH::ObjetSimuleSPH(std::string fich_param)
 
     /** Recuperation des parametres de la methode sph mis dans le fichier **/
     Param_sph(fich_param);
-    
+
+
 }
 
 /**
@@ -75,17 +76,19 @@ int box_indicator(float x, float y, float z)
 void ObjetSimuleSPH::initObjetSimule()
 {
     /* Initialisation des etats des particules */
-    float hh = h / 1.3;
-    
+    std::cout<<"h= "<<h<<std::endl;
+    float hh = h / 1.0;
+    std::cout<<"hh= "<<hh<<std::endl;
+
     float x, y, z;
-    
+
     // Nombre de particules
     _Nb_Sommets = 0;
-    
+
     for (x = 0; x < 1; x += hh) {
         for (y = 0; y < 1; y += hh){
             for (z = 0; z < 1; z += hh){
-                
+
                 // Pour un point (x,y,z) dans la region
                 if (box_indicator(x,y,z))
                 {
@@ -96,37 +99,44 @@ void ObjetSimuleSPH::initObjetSimule()
                     Force.push_back(Vector(0.0,0.0,0.0));
                     rho.push_back(0.0);
                     M.push_back(1);
-                    
+
                     // Compte les points qui tombent dans la région indiquee
                     ++_Nb_Sommets;
                 }
             }
         }
     }
-    
+    std::cout<<"NB sommets: "<< _Nb_Sommets<<std::endl;
     /* Calcul de la densite */
     CalculDensite();
-    
+
     /* Initialisation des masses */
     // Calcul de la densite moyenne
     // en considerant que toutes les particules ont une masse egale a 1
     float rho2s = 0;
     float rhos  = 0;
-    
+
+    std::cout<<"rho[i]= "<<rho[0]<<endl;
     for (int i = 0; i < _Nb_Sommets; ++i)
     {
         rho2s += rho[i] * rho[i];
         rhos  += rho[i];
     }
-    
+
     // Puis repartition de cette densite sur les masses
     for (int i = 0; i < _Nb_Sommets; ++i)
+    {
         M[i] *= ( rho0*rhos / rho2s );
-    
-    
+        //std::cout<<"rho0[i]= "<<rho0<<endl;
+        //std::cout<<"rhos[i]= "<<rhos<<endl;
+        //std::cout<<"rho2s[i]= "<<rho2s<<endl;
+        //std::cout<<"M[i]= "<<M[i]<<endl;
+    }
+
+
     /** Message pour la fin de la creation du maillage **/
     std::cout << "SPH build ..." << std::endl;
-    
+
 }
 
 
@@ -157,21 +167,21 @@ void ObjetSimuleSPH::Simulation(Vector gravite, float viscosite, int Tps)
 {
     /* Calcul des interactions entre particules */
     CalculInteraction(viscosite);
-    
+
     /* Calcul des accelerations (avec ajout de la gravite aux forces) */
     //std::cout << "Accel.... " << std::endl;
     _SolveurExpl->CalculAccel_ForceGravite(gravite, _Nb_Sommets, A, Force, M);
-    
+
     /* Calcul des vitesses et positions au temps t */
     //std::cout << "Vit.... " << std::endl;
    _SolveurExpl->Solve(viscosite, _Nb_Sommets, Tps, A, V, P);
-    
+
     /* Gestion des collisions  */
     // Reponse : rebond
     // Penser au Translate de l objet dans la scene pour trouver plan coherent
     CollisionPlan();
-    
+
     // Affichage des positions
     // AffichagePos(Tps);
-    
+
 }

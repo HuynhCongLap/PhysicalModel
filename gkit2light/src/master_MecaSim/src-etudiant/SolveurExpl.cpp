@@ -52,12 +52,16 @@ void SolveurExpl::CalculAccel_ForceGravite(Vector g,
                                            std::vector<Vector> &Force,
                                            std::vector<float> &M)
 {
-    
-    
+    for(int i=0; i< nb_som; i++)
+    {
+        A[i] = g;
+        Force[i] = M[i] * A[i];
+    }
+
 }//void
 
 
-/*! Calcul des vitesses et positions : 
+/*! Calcul des vitesses et positions :
  *  Formule d Euler semi-implicite :
  *  x'(t+dt) = x'(t) + dt x"(t)
  *  x(t+dt) = x(t) + dt x'(t+dt)
@@ -69,8 +73,12 @@ void SolveurExpl::Solve(float visco,
                         std::vector<Vector> &V,
                         std::vector<Vector> &P)
 {
-    
-    
-       
+
+  for(int i=0; i< nb_som; i++)
+    {
+        V[i] = V[i] + A[i]*_delta_t;
+        P[i] = P[i] + V[i]*_delta_t;
+    }
+
 }//void
 

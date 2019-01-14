@@ -48,7 +48,7 @@ h=0.05;
 
 
 positionX=0.0;
-positionY=0.0;
+positionY=100.0;
 positionZ=0.0;
 
 rotationX=0.0;

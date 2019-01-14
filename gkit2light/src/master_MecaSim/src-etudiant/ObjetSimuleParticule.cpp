@@ -57,7 +57,7 @@ ObjetSimuleParticule::ObjetSimuleParticule(std::string fich_param)
 
     /** Recuperation des parametres du systeme de particules mis dans le fichier **/
     Param_particule(fich_param);
-    
+
 }
 
 
@@ -69,87 +69,88 @@ void ObjetSimuleParticule::initObjetSimule()
     /* Variables intermediaires pour la lecture des donnees */
     Vector tmp_coord;
     float tmp_masse;
-    
+
     /** Lecture des positions des sommets **/
-    
+
     /// Fichier de donnees des points
     std::ifstream _FichIn_Points(_Fich_Points.c_str());
-    
+
     /// Test ouverture du fichier
     if (! _FichIn_Points)
     {
         std::cout << "Erreur d ouverture du fichier de donnees des points : "
         << _Fich_Points << std::endl;
-        
+
         // Arret du programme
         exit(1);
-        
+
     }
-    
+
     /// Lecture du nombre de sommets
     _FichIn_Points >> _Nb_Sommets;
     std::cout << "Nombre de sommets " << _Nb_Sommets <<std::endl;
-    
+
     /// Lecture des positions
     while (!_FichIn_Points.eof())
     {
         _FichIn_Points >> tmp_coord.x;
         _FichIn_Points >> tmp_coord.y;
         _FichIn_Points >> tmp_coord.z;
-        
+
         /// remplissage de P
         P.push_back(tmp_coord);
-        
+
     }
     std::cout << "Positions lues ..." << std::endl;
-    
-    
+
+
     /** Lecture de toutes les masses **/
-    
+
     std::ifstream _FichIn_Masses(_Fich_Masses.c_str());
-    
+
     /// Test ouverture du fichier
     if (! _FichIn_Masses)
     {
         std::cout << "Erreur d ouverture du fichier de donnees des masses : "
         << _Fich_Masses << std::endl;
-        
+
         // Arret du programme
         exit(1);
-        
+
     }
-    
+
     /// Lecture des masses
     while (!_FichIn_Masses.eof())
     {
         _FichIn_Masses >> tmp_masse;
-        
+
         /// Remplissage de M
         M.push_back(tmp_masse);
-        
+
     }
     std::cout << "Masses lues ..." << std::endl;
-    
-    
+
+
     /*** Initialisation des tableaux pour chacun des sommets ***/
     for (int i=0; i<_Nb_Sommets; ++i)
     {
         /** Vecteur nulle pour initialiser les vitesses,
          accel, forces des sommets **/
+        P[i].y += 3;
         V.push_back(Vector(0.0,0.0,0.0));
         A.push_back(Vector(0.0,0.0,0.0));
         Force.push_back(Vector(0.0,0.0,0.0));
-        
+
     }//for
-    
-    
+
+
     /** Fermeture des fichiers de donnees **/
     _FichIn_Masses.close();
     _FichIn_Points.close();
-    
+
     /** Message pour la fin de la creation du maillage **/
     std::cout << "Systeme particule build ..." << std::endl;
-    
+
 }
 
 
@@ -181,17 +182,17 @@ void ObjetSimuleParticule::Simulation(Vector gravite, float viscosite, int Tps)
     /* Calcul des accelerations (avec ajout de la gravite aux forces) */
     //std::cout << "Accel.... " << std::endl;
     _SolveurExpl->CalculAccel_ForceGravite(gravite, _Nb_Sommets, A, Force, M);
-    
+
     /* Calcul des vitesses et positions au temps t */
     //std::cout << "Vit.... " << std::endl;
     _SolveurExpl->Solve(viscosite, _Nb_Sommets, Tps, A, V, P);
-    
+
     /* ! Gestion des collisions avec sol et bords de la fenetre */
     // Reponse : rebond
     // Penser au Translate de l objet dans la scene pour trouver plan coherent
     CollisionPlan();
-    
+
     // Affichage des positions
-    // AffichagePos(Tps);
-    
+    //AffichagePos(Tps);
+
 }

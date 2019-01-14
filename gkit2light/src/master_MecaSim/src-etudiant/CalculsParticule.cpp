@@ -23,9 +23,9 @@
 
 /** \file CalculsParticule.cpp
 Programme calculant pour chaque particule i son etat au pas de temps suivant (methode d 'Euler semi-implicite) :
-principales fonctions de calculs.  
+principales fonctions de calculs.
 \brief Fonctions de calculs sur un ensemble de particules.
-*/ 
+*/
 
 #include <stdio.h>
 #include <math.h>
@@ -48,9 +48,16 @@ using namespace std;
  */
 void ObjetSimuleParticule::CollisionPlan()
 {
- 
+    for(int i=0; i< P.size(); i++)
+    {
+        if(P[i].y < 0.0)
+       {
+         P[i].y = 0;
+         V[i] = -V[i]*0.9;
+       }
+    }
     // Collision juste par rapport au plan horizontal passant par le y
-   
-    
+
+
 }
 

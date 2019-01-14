@@ -26,9 +26,9 @@
 
 /** \file CalculsSPH.cpp
 Programme calculant pour  un fluide son etat au pas de temps suivant (methode d 'Euler semi-implicite) en utilisant la methode SPH (Smoothed Particles Hydrodynamics):
-principales fonctions de calculs.  
+principales fonctions de calculs.
 \brief Fonctions de calculs pour un fluide avec methode SPH.
-*/ 
+*/
 
 #include <stdio.h>
 #include <math.h>
@@ -51,8 +51,8 @@ using namespace std;
  */
 void ObjetSimuleSPH::CalculDensite()
 {
-    
-    
+
+
 }//void
 
 
@@ -62,7 +62,7 @@ void ObjetSimuleSPH::CalculDensite()
  */
 void ObjetSimuleSPH::CalculInteraction(float visco)
 {
-    
+
 }//void
 
 
@@ -80,7 +80,7 @@ void ObjetSimuleSPH::CalculInteraction(float visco)
 void ObjetSimuleSPH::damp_reflect(int frontiere, float barrier, int indice_part)
 {
     /// frontiere : indique quelle frontiere (x, y, z) du domaine est concernee
-    
+
 
 }
 
@@ -92,7 +92,7 @@ void ObjetSimuleSPH::damp_reflect(int frontiere, float barrier, int indice_part)
  */
 void ObjetSimuleSPH::CollisionPlan()
 {
-   
-    
+
+
 }
 
