@@ -21,10 +21,10 @@
  */
 
 /** \file CalculsMSS.cpp
-Programme calculant pour chaque particule i d un MSS son etat au pas de temps suivant 
+Programme calculant pour chaque particule i d un MSS son etat au pas de temps suivant
  (methode d 'Euler semi-implicite) : principales fonctions de calculs.
 \brief Fonctions de calculs de la methode semi-implicite sur un systeme masses-ressorts.
-*/ 
+*/
 
 #include <stdio.h>
 #include <math.h>
@@ -48,10 +48,19 @@ using namespace std;
 void ObjetSimuleMSS::CalculForceSpring()
 {
 	/// f = somme_i (ki * (l(i,j)-l_0(i,j)) * uij ) + (nuij * (vi - vj) * uij) + (m*g) + force_ext
-	
+    std::cout<<"Size: "<<P.size()<<std::endl;
+
+    for(int i=0; i< P.size()-1; i++)
+    {
+        int nb_voisin = _SytemeMasseRessort->_ParticuleList[i]->GetNbVoisins();
+        for(int j=0; j<nb_voisin; j++)
+        {
+
+        }
+    }
 	/// Rq : Les forces dues a la gravite et au vent sont ajoutees lors du calcul de l acceleration
-    
-		
+
+
 }//void
 
 
@@ -61,7 +70,14 @@ void ObjetSimuleMSS::CalculForceSpring()
 void ObjetSimuleMSS::CollisionPlan()
 {
     /// Arret de la vitesse quand touche le plan
-   
-    
+    for(int i=0; i< P.size(); i++)
+    {
+        if(P[i].y < -10.0)
+       {
+         P[i].y = -10;
+         V[i] = -V[i]*0.9;
+       }
+    }
+
 }// void
 

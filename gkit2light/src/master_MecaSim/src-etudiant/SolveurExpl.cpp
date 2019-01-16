@@ -55,7 +55,7 @@ void SolveurExpl::CalculAccel_ForceGravite(Vector g,
     for(int i=0; i< nb_som; i++)
     {
         A[i] = g;
-        Force[i] = M[i] * A[i];
+        Force[i] =  M[i] * A[i];
     }
 
 }//void

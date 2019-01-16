@@ -22,7 +22,7 @@
 
 
 /** \file Noeuds.h
-\brief Definition des classes de noeuds du graphe de scene 
+\brief Definition des classes de noeuds du graphe de scene
 */
 
 
@@ -46,61 +46,61 @@
 /**
 * \brief Classe de base pour tous les elements de la scene.
  */
-class Noeud 
+class Noeud
 {
 public:
-	
+
 	/*! Constructeur */
 	Noeud() {}
-	
+
 	/*! Set name */
 	void setName(const char* n) {_name = std::string(n); }
-	
+
 	/*! Get name */
 	const std::string &getName() const {return _name;}
-	
+
 	/*! Operation d initialisation */
 	virtual void initObjetSimule() = 0;
-    
+
     /*! Operation de creation du maillage (servant a l affichage) */
     virtual void initMeshObjet() = 0;
-		
+
 	/*! Operation de simulation */
 	virtual void Simulation(Vector gravite, float viscosite, int Tps) = 0;
-    
+
     /*! Gestion des collisions */
     virtual void CollisionPlan() = 0;
-    
+
 	/*! Operation d'interaction */
 	virtual void Interaction(Vector MousePos) = 0;
-    
+
     /*! Mise a jour du Mesh (pour affichage) */
     virtual void updateVertex() = 0;
-	
+
 	/*! Destructeur */
 	virtual ~Noeud(){};
-	
-	
+
+
 public:
-		
+
     /// Nom du noeud
     std::string _name;
-    
+
     /// Declaration du Mesh (maillage pour l affichage)
     Mesh m_ObjetSimule;
-    
+
     /// Coordonnees du point d interaction
     Vector Coord_Point_Inter;
-    
+
     /// Nombre de sommets
     int _Nb_Sommets;
-    
+
     /// Declaration du tableau des positions
     std::vector<Vector> P;
-    
+
     /// Booleen : utilisation texture pour affichage
     bool _use_texture;
-    
+
 };
 
 

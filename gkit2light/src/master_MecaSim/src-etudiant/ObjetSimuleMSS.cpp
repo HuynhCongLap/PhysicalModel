@@ -394,9 +394,19 @@ void ObjetSimuleMSS::setNormals()
 void ObjetSimuleMSS::initMeshObjet()
 {
     //std::cout << "------ ObjetSimule::init_Mesh_Object() ----------- " << std::endl;
+    int x = 5 ;
+    int y = 5 ;
+    int z = 5 ;
 
+    m_ObjetSimule.color( Color(1, 1, 1) );
+    glPointSize(3);
+    m_ObjetSimule = Mesh(GL_POINTS);
 
+    // Couleur de la grille
+    m_ObjetSimule.color( Color(1, 0, 0));
 
+    for(int i=0;i< P.size();++i)
+        m_ObjetSimule.vertex( P[i].x, P[i].y, P[i].z);
 
     std::cout << "Maillage du MSS pour affichage build ..." << std::endl;
 
@@ -410,8 +420,9 @@ void ObjetSimuleMSS::initMeshObjet()
 void ObjetSimuleMSS::updateVertex()
 {
     //std::cout << "ObjetSimuleMSS::updateVertex() ..." << std::endl;
-
-
+    for(int i=0;i< P.size();++i){
+        m_ObjetSimule.vertex(i,P[i].x, P[i].y, P[i].z);
+    }
 }
 
 
@@ -441,7 +452,7 @@ void ObjetSimuleMSS::Simulation(Vector gravite, float viscosite, int Tps)
     /* ! Gestion des collisions  */
     // Reponse : reste a la position du sol - arret des vitesses
     // Penser au Translate de l objet dans la scene pour trouver plan coherent
-    //CollisionPlan();
+    CollisionPlan();
 
     // Affichage des positions
    //  AffichagePos(Tps);
