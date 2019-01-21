@@ -55,18 +55,18 @@ ObjetSimuleRigidBody::ObjetSimuleRigidBody(std::string fich_param)
 {
     /** Recuperation des parametres de l objet rigide mis dans le fichier **/
     Param_rigid(fich_param);
-    
+
     /// Pour l etat X(t) - specification de :
     // - position : x(t) - position du baycentre : _Position
     // - rotation : R(t) : _Rotation
     // - quantite de mouvement : P(t) : _QuantiteMouvement
     // - moment cinetique : L(t) : _MomentCinetique
-    
-   // cout << _Position << endl;
-   // cout << _Rotation << endl;
-   //cout << _QuantiteMouvement << endl;
-   //cout << _MomentCinetique << endl;
-    
+
+    cout << _Position << endl;
+    cout << _Rotation << endl;
+    cout << _QuantiteMouvement << endl;
+    cout << _MomentCinetique << endl;
+
 }
 
 
@@ -79,18 +79,18 @@ void ObjetSimuleRigidBody::initObjetSimule()
 {
     /** Initialisation des structures de donnees heritees du ObjetSimuleMSS **/
     ObjetSimuleMSS::initObjetSimule();
-    
+
     /** Initialisation des membres specifiques a l objet rigide **/
-    
+
     // Calcul de la masse - cst
     CalculMasse();
-    
+
     // Calcul de la partie constante du tenseur d inertie - IBody
     CalculIBody();
-    
+
     /** Message pour la fin de la creation du maillage **/
     std::cout << "Systeme rigid body build ..." << std::endl;
-    
+
 }
 
 
@@ -101,10 +101,17 @@ void ObjetSimuleRigidBody::initObjetSimule()
 void ObjetSimuleRigidBody::initMeshObjet()
 {
     //std::cout << "------ ObjetSimuleRigidBody::init_Mesh_Object() ----------- " << std::endl;
-    
-    
+    m_ObjetSimule.color( Color(1, 0, 0) );
+    glPointSize(3);
+    m_ObjetSimule = Mesh(GL_POINTS);
+
+    for(int i=0;i< P.size();++i)
+    {
+        m_ObjetSimule.vertex( Point(P[i]));
+    }
+
     std::cout << "Maillage du RigidBody pour affichage build ..." << std::endl;
-    
+
 }
 
 
@@ -115,10 +122,13 @@ void ObjetSimuleRigidBody::initMeshObjet()
 void ObjetSimuleRigidBody::updateVertex()
 {
     //std::cout << "ObjetSimuleRigidBody::updateVertex() ..." << std::endl;
-    
+     for(int i=0;i< P.size();++i)
+    {
+        m_ObjetSimule.vertex(i, Point(P[i]));
+    }
     // Cas ou on utilise le tableau des positions P pour faire la mise a jour du Mesh
     // Sinon rien dans cette fonction, et translation du Mesh initial en fonction de _Position
-    
+
 }
 
 
@@ -129,7 +139,7 @@ void ObjetSimuleRigidBody::Simulation(Vector gravite, float viscosite, int Tps)
 {
     // Calcul pour l etat X(t) : Inverse tenseur inertie : I^-1(t) et vitesse angulaire
     CalculStateX();
-    
+
     // Calcul pour d/dt X(t)
     // v(t) = = P(t) / mass
     // R'(t)
@@ -143,13 +153,13 @@ void ObjetSimuleRigidBody::Simulation(Vector gravite, float viscosite, int Tps)
     // L(t+dt) - moment cinetique
     // P(t+dt) - quantite mouvement
     Solve(viscosite);
- 
+
     /* ! Gestion des collisions */
     // Reponse : reste a la position du sol par exemple - arret des vitesses
     // Penser au Translate de l objet dans la scene pour trouver plan coherent
     //  CollisionPlan();
-    
+
     // Affichage des positions
-    //cout << " Position du centre de masse de l objet rigide :" << _Position << endl;
-    
+    cout << " Position du centre de masse de l objet rigide :" << _Position << endl;
+
 }

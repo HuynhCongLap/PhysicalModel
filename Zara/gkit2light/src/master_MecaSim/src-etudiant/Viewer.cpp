@@ -209,7 +209,7 @@ int Viewer::render( )
                 gl.texture(m_tissu_texture);
 
             // Transformation geometrique appliquee a l objet
-         //  gl.model(T * Scale(0.3, 0.3, 0.3));
+            //gl.model(T * Scale(0.05, 0.05, 0.05));
             gl.model(Identity());
 
             // Affichage du Mesh de l objet du graphe de scene

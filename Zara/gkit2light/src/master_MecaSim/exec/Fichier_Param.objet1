@@ -1,10 +1,10 @@
 #Points=./data/particules/points.eti;  
 #Masses=./data/particules/masses.eti;
 
-Points=./data/drap70/points.eti;  
-FaceSet=./data/drap70/faceset.eti; 
-Masses=./data/drap70/masses.eti;
-Textures=./data/drap70/texcoord.eti;
+#Points=./data/drap70/points.eti;  
+#FaceSet=./data/drap70/faceset.eti; 
+#Masses=./data/drap70/masses.eti;
+#Textures=./data/drap70/texcoord.eti;
 
 #Points=./data/drap4/points.eti;  
 #FaceSet=./data/drap4/faceset.eti; 
@@ -28,9 +28,9 @@ Textures=./data/drap70/texcoord.eti;
 #FaceSet=./data/vache/faceset.eti; 
 #Masses=./data/vache/masses.eti;
 
-#Points=./data/bunny/points.eti;  
-#FaceSet=./data/bunny/faceset.eti; 
-#Masses=./data/bunny/masses.eti;
+Points=./data/bunny/points.eti;  
+FaceSet=./data/bunny/faceset.eti; 
+Masses=./data/bunny/masses.eti;
 
 #Points=./data/sphere/points.eti;  
 #FaceSet=./data/sphere/faceset.eti; 

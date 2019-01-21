@@ -46,8 +46,20 @@ using namespace std;
  */
 void ObjetSimuleRigidBody::CalculMasse()
 {
-    
-    
+
+    for(int i=0 ; i< _Nb_Sommets; i++)
+    {
+
+        if(M[i] == 0)
+            M[i] = 1.0;
+        _Mass += M[i];
+
+        _Position = _Position + P[i] * M[i];
+    }
+    _Position = _Position/_Mass;
+
+    std::cout<<"Sum of Mass: "<< _Mass << std::endl;
+
 }
 
 
@@ -57,7 +69,9 @@ void ObjetSimuleRigidBody::CalculMasse()
  */
 void ObjetSimuleRigidBody::CalculIBody()
 {
-    
+    _Ibody = Matrix::UnitMatrix();
+    _IbodyInv = _Ibody;
+    _Ibody.Inverse();
 }
 
 
@@ -66,8 +80,8 @@ void ObjetSimuleRigidBody::CalculIBody()
  */
 void ObjetSimuleRigidBody::CalculStateX()
 {
-    
-    
+
+
 }
 
 
@@ -77,7 +91,7 @@ void ObjetSimuleRigidBody::CalculStateX()
  */
 void ObjetSimuleRigidBody::CalculDeriveeStateX(Vector gravite)
 {
-    
+
 }
 
 
@@ -86,8 +100,8 @@ void ObjetSimuleRigidBody::CalculDeriveeStateX(Vector gravite)
  */
 void ObjetSimuleRigidBody::Solve(float visco)
 {
-  
-    
+
+
 }//void
 
 
@@ -98,7 +112,7 @@ void ObjetSimuleRigidBody::Solve(float visco)
 void ObjetSimuleRigidBody::CollisionPlan()
 {
 
-   
-    
+
+
 }// void
 
