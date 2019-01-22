@@ -160,6 +160,6 @@ void ObjetSimuleRigidBody::Simulation(Vector gravite, float viscosite, int Tps)
     //  CollisionPlan();
 
     // Affichage des positions
-    cout << " Position du centre de masse de l objet rigide :" << _Position << endl;
+    //cout << " Position du centre de masse de l objet rigide :" << _Position << endl;
 
 }

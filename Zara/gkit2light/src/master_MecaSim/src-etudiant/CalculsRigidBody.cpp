@@ -69,9 +69,31 @@ void ObjetSimuleRigidBody::CalculMasse()
  */
 void ObjetSimuleRigidBody::CalculIBody()
 {
-    _Ibody = Matrix::UnitMatrix();
-    _IbodyInv = _Ibody;
-    _Ibody.Inverse();
+
+    Matrix I = Matrix::NullMatrix();
+    std::cout<<I<<std::endl;
+    std::cout<<Matrix::UnitMatrix()<<std::endl;
+    for(int i=0; i< _Nb_Sommets; i++)
+    {
+        _ROi.push_back(P[i]);
+
+        Vector ri = _ROi[i] - _Position;
+        Matrix r = StarMatrix(ri);
+        Matrix rt = StarMatrix(ri).TransposeConst();
+
+        float rtr =  ri.x*ri.x + ri.y*ri.y + ri.z*ri.z;
+        Matrix p1 = Matrix::UnitMatrix();
+
+        p1 *= rtr;
+        I += M[i]*( p1 - r*rt);
+
+
+    }
+    std::cout<<"-----------"<<std::endl;
+    _Ibody = I;
+    _IbodyInv = I.InverseConst();
+    std::cout<<_Ibody<<std::endl;
+    std::cout<<I.InverseConst()<<std::endl;
 }
 
 
@@ -80,8 +102,8 @@ void ObjetSimuleRigidBody::CalculIBody()
  */
 void ObjetSimuleRigidBody::CalculStateX()
 {
-
-
+    _InertieTenseurInv = _Rotation*_IbodyInv*_Rotation.InverseConst();
+    _VitesseAngulaire = _InertieTenseurInv*_MomentCinetique;
 }
 
 
@@ -91,7 +113,17 @@ void ObjetSimuleRigidBody::CalculStateX()
  */
 void ObjetSimuleRigidBody::CalculDeriveeStateX(Vector gravite)
 {
+    _Vitesse = _QuantiteMouvement/_Mass;
+    _InertieTenseurInv = _Rotation*_IbodyInv*_Rotation.TransposeConst();
+    _VitesseAngulaire = _InertieTenseurInv*_MomentCinetique;
+    _RotationDerivee = _VitesseAngulaire*_Rotation;
 
+    _Force = _Mass*gravite;
+
+    for(int i=0 ; i< _Nb_Sommets; i++)
+    {
+        _Torque = _Torque +  cross(( P[i] - _Position ), Force[i]);
+    }
 }
 
 
@@ -100,7 +132,10 @@ void ObjetSimuleRigidBody::CalculDeriveeStateX(Vector gravite)
  */
 void ObjetSimuleRigidBody::Solve(float visco)
 {
-
+    _Position = _Position + _Vitesse* _delta_t;
+    _Rotation = _Rotation + _RotationDerivee *_delta_t;
+    _QuantiteMouvement = _QuantiteMouvement + _Force*_delta_t;
+    _MomentCinetique = _MomentCinetique + _Torque*_delta_t;
 
 }//void
 
