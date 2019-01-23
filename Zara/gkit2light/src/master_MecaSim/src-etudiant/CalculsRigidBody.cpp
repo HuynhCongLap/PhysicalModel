@@ -71,29 +71,22 @@ void ObjetSimuleRigidBody::CalculIBody()
 {
 
     Matrix I = Matrix::NullMatrix();
-    std::cout<<I<<std::endl;
-    std::cout<<Matrix::UnitMatrix()<<std::endl;
+
     for(int i=0; i< _Nb_Sommets; i++)
     {
         _ROi.push_back(P[i]);
 
         Vector ri = _ROi[i] - _Position;
-        Matrix r = StarMatrix(ri);
-        Matrix rt = StarMatrix(ri).TransposeConst();
-
         float rtr =  ri.x*ri.x + ri.y*ri.y + ri.z*ri.z;
-        Matrix p1 = Matrix::UnitMatrix();
 
-        p1 *= rtr;
-        I += M[i]*( p1 - r*rt);
-
+        I += ( Matrix::UnitMatrix()*rtr - MultiplyTransposedAndOriginal(ri))*M[i];
 
     }
     std::cout<<"-----------"<<std::endl;
     _Ibody = I;
     _IbodyInv = I.InverseConst();
     std::cout<<_Ibody<<std::endl;
-    std::cout<<I.InverseConst()<<std::endl;
+    std::cout<<_IbodyInv<<std::endl;
 }
 
 
@@ -102,7 +95,7 @@ void ObjetSimuleRigidBody::CalculIBody()
  */
 void ObjetSimuleRigidBody::CalculStateX()
 {
-    _InertieTenseurInv = _Rotation*_IbodyInv*_Rotation.InverseConst();
+    _InertieTenseurInv = _Rotation*_IbodyInv*_Rotation.TransposeConst();
     _VitesseAngulaire = _InertieTenseurInv*_MomentCinetique;
 }
 
@@ -114,16 +107,17 @@ void ObjetSimuleRigidBody::CalculStateX()
 void ObjetSimuleRigidBody::CalculDeriveeStateX(Vector gravite)
 {
     _Vitesse = _QuantiteMouvement/_Mass;
-    _InertieTenseurInv = _Rotation*_IbodyInv*_Rotation.TransposeConst();
-    _VitesseAngulaire = _InertieTenseurInv*_MomentCinetique;
     _RotationDerivee = _VitesseAngulaire*_Rotation;
 
     _Force = _Mass*gravite;
 
+    Vector null = Vector(0,0,0);
     for(int i=0 ; i< _Nb_Sommets; i++)
     {
-        _Torque = _Torque +  cross(( P[i] - _Position ), Force[i]);
+        //null = null +  cross( _Rotation*_ROi[i] + _Position, gravite*M[i]);
+        null = null +  cross( _Rotation*_ROi[i] + _Position, Vector(0,0,0));
     }
+    _Torque = null;
 }
 
 
@@ -132,10 +126,11 @@ void ObjetSimuleRigidBody::CalculDeriveeStateX(Vector gravite)
  */
 void ObjetSimuleRigidBody::Solve(float visco)
 {
-    _Position = _Position + _Vitesse* _delta_t;
+     std::cout<< _InertieTenseurInv << std::endl;
+    _Position = _Position + _Vitesse * _delta_t;
     _Rotation = _Rotation + _RotationDerivee *_delta_t;
-    _QuantiteMouvement = _QuantiteMouvement + _Force*_delta_t;
-    _MomentCinetique = _MomentCinetique + _Torque*_delta_t;
+    _QuantiteMouvement = _QuantiteMouvement + _Force *_delta_t;
+    _MomentCinetique = _MomentCinetique + _Torque *_delta_t;
 
 }//void
 
@@ -146,8 +141,11 @@ void ObjetSimuleRigidBody::Solve(float visco)
  */
 void ObjetSimuleRigidBody::CollisionPlan()
 {
-
-
+        if(_Position.y < -10.0)
+        {
+            _Position.y = -10;
+            _Vitesse = -_Vitesse*0.3;
+        }
 
 }// void
 

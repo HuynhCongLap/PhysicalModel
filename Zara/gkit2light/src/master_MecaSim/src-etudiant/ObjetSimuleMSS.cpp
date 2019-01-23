@@ -395,17 +395,34 @@ void ObjetSimuleMSS::initMeshObjet()
 {
     std::cout << "------ ObjetSimule::init_Mesh_Object() ----------- " << std::endl;
 
+    m_ObjetSimule = Mesh(GL_TRIANGLES);
 
-    m_ObjetSimule.color( Color(1, 0, 0) );
-    glPointSize(3);
-    m_ObjetSimule = Mesh(GL_POINTS);
 
-    for(int i=0;i< P.size();++i)
+    for(unsigned int i=0; i<_NFacets; ++i)
     {
+        // Sommets a, b, c de la face
+        int a = _VIndices[3 * i];
+        int b = _VIndices[(3 * i) + 1];
+        int c = _VIndices[(3 * i) + 2];
 
-        m_ObjetSimule.vertex( Point(P[i]));
+
+        m_ObjetSimule.texcoord(_vectTexture[a].u,_vectTexture[a].v);
+        m_ObjetSimule.normal(_vectNormals[a].x, _vectNormals[a].y, _vectNormals[a].z );
+        m_ObjetSimule.vertex( Point(P[a]));
+
+
+        m_ObjetSimule.texcoord(_vectTexture[b].u,_vectTexture[b].v);
+        m_ObjetSimule.normal(_vectNormals[b].x, _vectNormals[b].y, _vectNormals[b].z );
+        m_ObjetSimule.vertex( Point(P[b]));
+
+
+        m_ObjetSimule.texcoord(_vectTexture[c].u,_vectTexture[c].v);
+        m_ObjetSimule.normal(_vectNormals[c].x, _vectNormals[c].y, _vectNormals[c].z );
+        m_ObjetSimule.vertex( Point(P[c]));
+
+
     }
-    std::cout << 0 << ": " << P[0] <<std::endl;
+
 
     std::cout << "Maillage du MSS pour affichage build ..." << std::endl;
 
@@ -420,18 +437,18 @@ void ObjetSimuleMSS::initMeshObjet()
 
 void ObjetSimuleMSS::updateVertex()
 {
-    //std::cout << "ObjetSimuleMSS::updateVertex() ..." << std::endl;
-    //std::cout<<"Pos I:"<<_SytemeMasseRessort->GetParticule(0)->GetPosition()<<std::endl;
-    //std::cout<<"P 0:"<<P[0]<<std::endl;
-
-    //std::cout<<"Pos I:"<<_SytemeMasseRessort->GetParticule(1)->GetPosition()<<std::endl;
-    //std::cout<<"P 0:"<<P[1]<<std::endl;
-
-    for(int i=0; i<_Nb_Sommets; i++)
+    for(unsigned int i=0; i<_NFacets; ++i)
     {
-        //std::cout << "Point" << i << ": "<< P[i] << std::endl;
-        m_ObjetSimule.vertex(i,Point(P[i]));
+        // Sommets a, b, c de la face
+        int a = _VIndices[3 * i];
+        int b = _VIndices[(3 * i) + 1];
+        int c = _VIndices[(3 * i) + 2];
+        m_ObjetSimule.vertex(3 * i, Point(P[a]));
+        m_ObjetSimule.vertex((3 * i) + 1, Point(P[b]));
+        m_ObjetSimule.vertex((3 * i) + 2, Point(P[c]));
+
     }
+
 }
 
 
@@ -444,6 +461,7 @@ void ObjetSimuleMSS::Simulation(Vector gravite, float viscosite, int Tps)
     //std::cout << "Force.... " << std::endl;
     CalculForceSpring();
 
+
     /* Calcul des accelerations (avec ajout de la gravite aux forces) */
     //std::cout << "Accel.... " << std::endl;
     if (_Integration == "explicite")
@@ -451,12 +469,17 @@ void ObjetSimuleMSS::Simulation(Vector gravite, float viscosite, int Tps)
     else if (_Integration == "implicite")
         _SolveurImpl->CalculAccel_ForceGravite(gravite, _Nb_Sommets, A, Force, M);
 
+
+     Wind();
+
     /* Calcul des vitesses et positions au temps t */
     //std::cout << "Vit.... " << std::endl;
     if (_Integration == "explicite")
         _SolveurExpl->Solve(viscosite, _Nb_Sommets, Tps, A, V, P);
     else if (_Integration == "implicite")
         _SolveurImpl->Solve(viscosite, _Nb_Sommets, Tps, Force, A, V, P, M, gravite, _SytemeMasseRessort);
+
+     //Wind();
 
     /* ! Gestion des collisions  */
     // Reponse : reste a la position du sol - arret des vitesses

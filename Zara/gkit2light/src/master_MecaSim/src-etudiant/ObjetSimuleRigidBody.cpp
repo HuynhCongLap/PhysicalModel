@@ -105,9 +105,9 @@ void ObjetSimuleRigidBody::initMeshObjet()
     glPointSize(3);
     m_ObjetSimule = Mesh(GL_POINTS);
 
-    for(int i=0;i< P.size();++i)
+    for(int i=0;i< _Nb_Sommets; ++i)
     {
-        m_ObjetSimule.vertex( Point(P[i]));
+        m_ObjetSimule.vertex( Point(_Rotation*_ROi[i] + _Position));
     }
 
     std::cout << "Maillage du RigidBody pour affichage build ..." << std::endl;
@@ -122,9 +122,9 @@ void ObjetSimuleRigidBody::initMeshObjet()
 void ObjetSimuleRigidBody::updateVertex()
 {
     //std::cout << "ObjetSimuleRigidBody::updateVertex() ..." << std::endl;
-     for(int i=0;i< P.size();++i)
+     for(int i=0;i< _Nb_Sommets;++i)
     {
-        m_ObjetSimule.vertex(i, Point(P[i]));
+        m_ObjetSimule.vertex(i, Point(_Rotation*_ROi[i] + _Position));
     }
     // Cas ou on utilise le tableau des positions P pour faire la mise a jour du Mesh
     // Sinon rien dans cette fonction, et translation du Mesh initial en fonction de _Position
@@ -157,7 +157,7 @@ void ObjetSimuleRigidBody::Simulation(Vector gravite, float viscosite, int Tps)
     /* ! Gestion des collisions */
     // Reponse : reste a la position du sol par exemple - arret des vitesses
     // Penser au Translate de l objet dans la scene pour trouver plan coherent
-    //  CollisionPlan();
+      CollisionPlan();
 
     // Affichage des positions
     //cout << " Position du centre de masse de l objet rigide :" << _Position << endl;
