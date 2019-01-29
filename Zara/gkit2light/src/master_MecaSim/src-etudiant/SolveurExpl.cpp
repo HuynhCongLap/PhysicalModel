@@ -54,10 +54,12 @@ void SolveurExpl::CalculAccel_ForceGravite(Vector g,
 {
     for(int i=0; i<nb_som; i++)
     {
-        if(M[i] == 0.0)
-            M[i] = 1;
-        Force[i] = Force[i] + M[i]*g;
-        A[i] = Force[i]/M[i];
+
+        M[i] = 1;
+        //Force[i] = Force[i] + M[i]*g;
+        //A[i] = Force[i]/M[i];
+        A[i] =  Force[i] + g;
+        Force[i] = Vector(0,0,0);
     }
 
 }//void

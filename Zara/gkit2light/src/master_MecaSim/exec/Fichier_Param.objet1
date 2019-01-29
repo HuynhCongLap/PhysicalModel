@@ -1,10 +1,10 @@
 #Points=./data/particules/points.eti;  
 #Masses=./data/particules/masses.eti;
 
-Points=./data/drap70/points.eti;  
-FaceSet=./data/drap70/faceset.eti; 
-Masses=./data/drap70/masses.eti;
-Textures=./data/drap70/texcoord.eti;
+#Points=./data/drap70/points.eti;  
+#FaceSet=./data/drap70/faceset.eti; 
+#Masses=./data/drap70/masses.eti;
+#Textures=./data/drap70/texcoord.eti;
 
 #Points=./data/drap4/points.eti;  
 #FaceSet=./data/drap4/faceset.eti; 

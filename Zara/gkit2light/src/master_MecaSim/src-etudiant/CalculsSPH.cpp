@@ -26,9 +26,9 @@
 
 /** \file CalculsSPH.cpp
 Programme calculant pour  un fluide son etat au pas de temps suivant (methode d 'Euler semi-implicite) en utilisant la methode SPH (Smoothed Particles Hydrodynamics):
-principales fonctions de calculs.  
+principales fonctions de calculs.
 \brief Fonctions de calculs pour un fluide avec methode SPH.
-*/ 
+*/
 
 #include <stdio.h>
 #include <math.h>
@@ -51,8 +51,48 @@ using namespace std;
  */
 void ObjetSimuleSPH::CalculDensite()
 {
-    
-    
+
+    for(int i=0; i< _Nb_Sommets; i++)
+    {
+        float d = 0;
+        for(int j=0; j< _Nb_Sommets; j++)
+        {
+
+            float val = h*h - length2(P[i] - P[j]);
+            if( val > 0)
+                d += pow(val,3);
+        }
+        rho[i] = ( (4*M[i]) / (M_PI*pow(h,8)) ) * d;
+
+        std::cout<<" rho[" << i << "]= " << rho[i] <<std::endl;
+    }
+
+
+    /*
+    for(int i= 0 ; i < _Nb_Sommets-1; i++)
+    {
+        float constant = (4*M[i]) / ( M_PI*pow(h,8)) ;
+
+        for(int j= i+1 ; j < _Nb_Sommets; j++)
+        {
+            float d = h*h - length2( P[i] - P[j]) ;
+            if( d > 0)
+            {
+                float pij = pow(d,3);
+
+                rho[i] += ( constant ) * pij ;
+                rho[j] += ( constant ) * pij ;
+            }
+            else
+                continue;
+        }
+    }
+    */
+
+    for(int i=0; i< _Nb_Sommets; i++)
+    {
+        std::cout<<" rho[" << i << "]= " << rho[i] <<std::endl;
+    }
 }//void
 
 
@@ -62,7 +102,35 @@ void ObjetSimuleSPH::CalculDensite()
  */
 void ObjetSimuleSPH::CalculInteraction(float visco)
 {
-    
+     for(int i= 0 ; i < _Nb_Sommets-1; i++)
+    {
+        float constant = (4*M[i]) / ( M_PI*pow(h,8)) ;
+
+        for(int j= i+1 ; j < _Nb_Sommets; j++)
+        {
+            float d = h*h - length2( P[i] - P[j]) ;
+            if( d > 0)
+            {
+                Vector rij = P[i] - P[j] ;
+                Vector vij = V[i] - V[j] ;
+
+                float qij = length(rij) / h ;
+
+                float left = M[j]*(1-qij) / (M_PI*pow(h,4)*rho[j]);
+
+                Vector right = 15*bulk*(rho[i] + rho[j] - 2*rho0) * ( (1- qij) / qij) * rij -40*visco*vij;
+
+               Force[i] = Force[i] + left*right;
+               Force[j] = Force[j] + left*right;
+
+               //std::cout<<" Force[" << i << "]= " << left*right <<std::endl;
+            }
+            else
+                continue;
+        }
+        Force[i] = Force[i] / rho[i];
+    }
+    Force[_Nb_Sommets-1] = Force[_Nb_Sommets-1] / rho[_Nb_Sommets-1];
 }//void
 
 
@@ -80,7 +148,7 @@ void ObjetSimuleSPH::CalculInteraction(float visco)
 void ObjetSimuleSPH::damp_reflect(int frontiere, float barrier, int indice_part)
 {
     /// frontiere : indique quelle frontiere (x, y, z) du domaine est concernee
-    
+
 
 }
 
@@ -92,7 +160,16 @@ void ObjetSimuleSPH::damp_reflect(int frontiere, float barrier, int indice_part)
  */
 void ObjetSimuleSPH::CollisionPlan()
 {
-   
-    
+    /*
+    for(int i=0; i< _Nb_Sommets; i++)
+    {
+        if(P[i].y < -2)
+        {
+            P[i].y = -2;
+            V[i] = -0.5*V[i];
+        }
+    }
+    */
+
 }
 

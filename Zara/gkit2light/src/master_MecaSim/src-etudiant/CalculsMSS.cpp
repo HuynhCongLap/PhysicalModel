@@ -103,10 +103,10 @@ void ObjetSimuleMSS::Wind()
 {
     for(int i=0; i< _Nb_Sommets; i++)
     {
-        //if(P[i].y > -0.2 && P[i].y < 0)
-        //{
-            //A[i] = Vector(0,0,0);
-            //Force[i] = Vector(0,0,0);
-        //}
+        if(P[i].y > -1 && P[i].y < 0)
+        {
+            A[i] = Vector(0,0,0);
+            Force[i] = Vector(0,0,0);
+        }
     }
 }
